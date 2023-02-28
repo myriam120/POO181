@@ -22,6 +22,10 @@ class personaje:
         cargador = cargador + municiones 
         print("El arma tiene " + str(cargador) + "balas")   
         
+     #Ejemplo de metodo privado    
+    def __pensar(self):
+        print("Estoy pensando................")    
+        
     def getespecie(self):
         return self.__especie 
     def setespecie(self, esp):

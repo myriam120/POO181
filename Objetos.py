@@ -36,7 +36,9 @@ print("Metodos personaje")
 Heroe.correr(True)
 Heroe.lanzarGranada()
 Heroe.recargarArma(cargaHeroe)
-Heroe.__pensar()
+
+#Ejemplo de lo que no se puede hacer
+#Heroe.__pensar()
 
 print("")
 print("### Atributos y metodos del villano ###")
