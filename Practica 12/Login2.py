@@ -28,6 +28,9 @@ password_entry.pack()
 login_button = tk.Button(root, text="Iniciar sesión", command=login, bg="#ff0000")
 login_button.pack()
 
+# Para el mensaje de bienvenida 
+message_label = tk.Label(root, text="")
+message_label.pack()
 
 # Ejecutar la ventana de inicio de sesión
 root.mainloop()
