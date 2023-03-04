@@ -15,7 +15,7 @@ password_entry = tk.Entry(root, show="*")
 password_entry.pack()
 
 
-inicie = Button(root, text="INICIE SESION", command= messagebox.showerror)
+inicie = Button(root, text="INICIE SESION", command= messagebox.askokcancel)
 inicie.pack()
 
 root.mainloop()
