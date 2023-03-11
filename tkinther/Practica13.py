@@ -1,38 +1,54 @@
-from tkinter import messagebox
-
-class logic:
-
-   def __init__(self):
-       self.__contraseña= "myriam@gmail.com"
-       self.__email = "araujo1210"
-       
-       def validarcontra(self, email, constra):
-         if (email == "" or constra == ""):
-            messagebox.showwarning("Cuidado revisa bien tus datos")
-         else: 
-             if(self.__email == email and self.__contraseña == constra)
-             messagebox.showinfo("Bienvenido")
-             
 import tkinter as tk
-import random
-import string
+from Logic import *
 
-class Contraseña():
-    def _init_(self,master=None):
-        super()._init-(master)
-        self.caracteres = list(string.ascii_letters+string.punctuation)
-        self.password = ''
-        self.ancho = 8
-        self.master = master
-        self.pack()
-        self.btnPassword()
-        self.txtPassword()
-        self.btnQuit()
+class Ventana(tk.Tk):
+    def _init_(self):
+        tk.Tk._init_(self)
+        self.title("Practica 13")
+        self.geometry("300x150")
         
-    def btnPassword(self):
-        self._btnPassword = tk.Button(self)
-        self._btnPassword["text"] = "Contraseña Nueva"
-        self._btnPassword["command"] = self._nuevoPassword
-        self._btnPassword.pack(side="left")
-       
+        #Etiqueta de longitud
+        self.lenlabel = tk.Label(text="longitud de tu contraseña ")
+        self.lenlabel.pack()
+        
+        #Entry de Longitud
+        self.entryLen = tk.Entry(self)
+        self.entryLen.pack()
+        
+        #Checkbox de Mayusculas
+
+
+        # Crea la casilla de verificación y asocia su estado con la variable "estado"
+        self.estado = tk.BooleanVar()
+        
+        self.estado1 = tk.BooleanVar()
+        self.checkboxm = tk.Checkbutton(self, text="Incluir mayuscula",variable=self.estado,onvalue=True, offvalue=False)
+        self.checkboxm.pack()
+        self.checkboxes = tk.Checkbutton(self, text="Incluir caracteres especiales",variable=self.estado1,onvalue=True, offvalue=False)
+        self.checkboxes.pack()
+        
+
+        
+        #Checkbox de caracteres especiales
+        
+        
+    
+        #Boton de ingresar con la funcion de obtener los datos de los entry's, y mandarlos a la clase login
+        self.button = tk.Button(self, text="Generar Contraseña", command=self.on_button)
+        self.button.pack()
+        
+    #Función para el botón
+    def on_button(self):
+        #se crea el objeto con los gets de los entry's
+        seg=logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
+        #se mandan los parametros de los gets para la funcion loginveriicacion de la clase login.py
+        seg.Seguridad(int(self.entryLen.get()))
+        gen=logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
+        gen.Contraseña(int(self.entryLen.get()),self.estado.get(),self.estado1.get())
+        print(self.entryLen.get())
+        print(self.estado.get())
+        print(self.estado1.get())
+
+ventana = Ventana()
+ventana.mainloop()
     
