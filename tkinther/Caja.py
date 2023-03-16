@@ -7,14 +7,14 @@ class Appli(ttk.Frame):
     
     def __init__(self, main_window):
         super().__init__(main_window)
-        main_window.title("Panel de pestañas en Tcl/Tk")
+        main_window.title("Caja popular")
         
         # Crear el panel de pestañas.
         self.notebook = ttk.Notebook(self)
         
         # Crear el contenido de cada una de las pestañas.
-        self.web_label = ttk.Label(self.notebook,text="Aceptar")
-        self.forum_label = ttk.Label(self.notebook,text="Menu")
+        self.web_label = ttk.Label(self.notebook,text="")
+        self.forum_label = ttk.Label(self.notebook,text="")
         
         # Añadirlas al panel con su respectivo texto.
         self.notebook.add(self.web_label, text="Cuenta", padding=20)
@@ -31,7 +31,7 @@ class Appli(ttk.Frame):
         self.name_entry.pack()
         
         self.greet_button = ttk.Button(
-            self, text="Saludar", command=self.say_hello)
+            self, text="Aceptar", command=self.say_hello)
         self.greet_button.pack()
         
         self.greet_label = ttk.Label(self)
@@ -56,6 +56,7 @@ class AboutFrame(ttk.Frame):
         self.forum_button = ttk.Button(self, text="Visitar foro")
         self.forum_button.pack()
 
+    
         
 main_window = tk.Tk()
 app = Appli(main_window)

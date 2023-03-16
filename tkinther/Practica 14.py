@@ -1,14 +1,38 @@
 from tkinter import messagebox, Frame, Tk, Button, Label
-from Caja import *
-       
-ventana = Tk()
-ventana.title("Practica 14 Caja popular")
-ventana.geometry("600x400")
+import tkinter as tk
+from tkinter import ttk
+class Appli():
+    def __init__(self) -> None:
+        self.__cuenta 
+        self.__Edad
+        self.__titular 
+        self.__saldo
+        self.__menu 
         
-sec1 = Frame(ventana) 
-sec1.pack(expand= True, fill= "both")   
-titulo = Label (sec1, text= "No.Cuenta", bg= "purple", fg= "white")
+        self.notebook.add(self.web_label, text="Cuenta", padding=20)
+        self.notebook.add(self.forum_label, text="Datos", padding=20) 
+        
+        self.notebook.pack(padx=10, pady=10)
+        self.pack()
+            
+        def __init__(self, main_window):
+          super().__init__(main_window)
+        main_window.title("Caja popular")
+        
+        class GreetingFrame(ttk.Frame):
     
-menu = Button(sec1, text= "SELECIONA EN EL MENU", fg= "purple", command= "")
- 
-ventana.mainloop()
+         def __init__(self, *args, **kwargs):
+          super().__init__(*args, **kwargs)
+        
+        self.name_entry = ttk.Entry(self)
+        self.name_entry.pack()
+        
+        self.greet_button = ttk.Button(
+            self, text="Aceptar", command=self.say_hello)
+        self.greet_button.pack()
+       
+         
+         
+main_window = tk.Tk()
+app = Appli(main_window)
+app.mainloop()
