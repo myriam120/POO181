@@ -1,40 +1,18 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import Tk
+from tkinter import Button, messagebox
 import random
 
-class matri:
-    def __init__(self, nom, apema, naci, cur, apepa, car) -> None:
-        self.__nombre = nom 
-        self.__apellidoma = apema
-        self.__apellidopa = apepa
-        self.__Fenacimiento = naci
-        self.__Acurso = cur 
-        self.__carrera = car
+def __generara__ (self, nom, apema, naci, cur, apepa, car) -> None:
+    self.__nombre = nom 
+    self.__apellidoma = apema
+    self.__apellidopa = apepa
+    self.__Fenacimiento = naci
+    self.__Acurso = cur 
+    self.__carrera = car
+    
+    matricula = nom[:1] + apema[:2] + apepa[:2] + naci[-2:] + cur[-2:] + car[:3]
+    matricula += str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9))
+    matricula.config(text="Tu matricula es:" + matricula)
         
-    def nombre (self, nom):
-        if (nom):
-            print ("Escribe tu nombre:" + self.__nombre)
-     
-    def apellidodoma (self, apema):
-        if (apema):
-            print ("Escribe tu apelldo materno:" + self.__apellidoma)
-            
-    def apellidopa (self, apepa):
-        if (apepa):
-            print ("Escribe tu segundo apellido:" + self.__apellidopa)    
-            
-    def Fenacimiento (self, naci):
-        if (naci):
-            print ("Escribe tu fecha de naciemiento:" + self.__Fenacimiento)
-            
-    matri = apellidodoma + apellidopa + nombre + Fenacimiento
-    matri += str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9))
-    matri.config(text="Tu matricula es:" + matri)
-
-    def mensaje ():
-        messagebox.askyesno("Esta es tu matricula:")
-    
-    
-    
-    
-            
+        
