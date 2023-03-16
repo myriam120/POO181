@@ -1,9 +1,8 @@
-from tkinter import messagebox, Frame, Tk, Button, Label
 import tkinter as tk
 from tkinter import ttk
 import random
 
-class examn():
+class matri:
     def __init__(self, nom, apema, naci, cur, apepa, car) -> None:
         self.__nombre = nom 
         self.__apellidoma = apema
@@ -28,10 +27,12 @@ class examn():
         if (naci):
             print ("Escribe tu fecha de naciemiento:" + self.__Fenacimiento)
             
-    examn = apellidodoma[:2] + apellidopa[:2] + nombre[:2] + Fenacimiento[:2]
-    examn += str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9))
-    examn_label.config(text="Tu matricula es:" + examn)
+    matri = apellidodoma + apellidopa + nombre + Fenacimiento
+    matri += str(random.randint(0,9)) + str(random.randint(0,9)) + str(random.randint(0,9))
+    matri.config(text="Tu matricula es:" + matri)
 
+    def mensaje ():
+        messagebox.askyesno("Esta es tu matricula:")
     
     
     
