@@ -2,49 +2,77 @@ from tkinter import messagebox
 import sqlite3
 import bcrypt
 
-class controladorDB:
+class controladorBD:
     
-    def __init__(self):
-        pass 
+    def _init_(self):
+        pass
     
-    def conexionBD (self):
+    # Metodo para crear conexiones
+    def conexionBD(self):
         try:
-            conexion = sqlite3.connect(""C:/SUsers/majo0/Desktop/FPOO181/tkinterSQlite/DBUsuario.db"")
-            print ("Conectado a la BD")
-            return conexion
+            conexion= sqlite3.connect("/Users/majo0/Desktop/FPOO181/tkinterSQlite/DBUsuario.db")
+            print("Conectado a la BD")
+            return conexion 
         except sqlite3.OperationalError:
-            print ("No se puede conectar")
-            
-    def guardarUsuario (self, nom, cor, con):
-         
-    #1. usamos una conexion 
-        conx = self.conexionBD()
+            print("No se pudo conectar")
+    
+    #Metodo para Guardar Usuarios
+    def guardarUsuario(self,Nom,Cor,Con):
         
-    #2. validar los parametros
-        if(nom == "" or cor== "" or con ==""):
-            messagebox.showwarning("Formulario incompleto")
-        else: 
+        #1. Usamos una conexion
+        Conx= self.conexionBD()
+        
+        #2. Validar parametros Vacios
+        if(Nom == "" or Cor == "" or Con == ""):
+            messagebox.showwarning("Aguas", "Formulario Incompleto")
+        else:
             
-            #3. Preparamos el cursor, los datos y el querysql
-            cursor = conx.cursor()
-            conH = self.encriptarCon(con)
-            datos =(nom,cor,conH)
-            qrInsert = "insert into TBRegistros(nombre, correo, contra)values(?,?,?)"
+            #3. Preparamos Cursor,Datos,QuerySQL
+            Cursor= Conx.cursor()  
+            ConH= self.encriptarCon(Con)
+            Datos=(Nom,Cor,ConH)
+            qrInsert= "insert into TBRegistrados(nombre,correo,contra) values(?,?,?)" 
             
-            #4. Ejecutar la insert y corremos la conexion 
-            cursor.execute(qrInsert, datos)
-            conx.commit()
-            conx.close()
-            messagebox.showinfo("Exito", "Usuarido guardado")
+            #4. Ejecutar Insert y cerramos Conexión
+            Cursor.execute(qrInsert,Datos) 
+            Conx.commit()
+            Conx.close
+            messagebox.showinfo("Éxito", "Usuario Guardado")
+        
+        
+    # Método para encriptar Contraseñas    
+    def encriptarCon(self,Con):
+            ConPlana= Con
             
-     #metodos de encriptar contraseña        
-    def encriptarCon(self,con):
-        conPlana = con
-        #preparamos con bytes y la sal
-        conPlana = conPlana.encode() #convertimos con a bytes
-        sal = bcrypt.gensalt()
-        #encryptamos la contraseña 
-        conHa =bcrypt.hashpw(conPlana, sal)
-        print(conHa)
-        #enviamos la contraseña encryptada
-        return conHa
+            
+            #Preparamos con en bytes y la SAL
+            ConPlana= ConPlana.encode()    #Convertimos con a bytes
+            Sal= bcrypt.gensalt()
+            
+            #Encryptamos la contraseña
+            ConHa= bcrypt.hashpw(ConPlana, Sal)
+            print(ConHa)
+            return ConHa
+        
+    #Buscar un usuario 
+    def consultarUsuario (self, id):
+        #1. Prepara una conexion 
+        conx= self.conexionBD()
+        #2 verificar si el id contiene algo
+        if (id == ""):
+            messagebox.showwarning("Cuidado", "Id vacio escribe algo valido")
+        else:
+            try:
+                #preparar el cursor del query
+                cursor = conx.cursor()
+                selectQry = "select * from TBRegistrados where id= "+ id
+                
+                #4. ejecutar y guardar la consulta
+                cursor.execute(selectQry)
+                rsUsuario = cursor.fetchall()
+                conx.close()
+                
+                return rsUsuario
+             
+            except sqlite3.OperationalError:
+                print("Error consulta")        

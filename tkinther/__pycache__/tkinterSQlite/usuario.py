@@ -1,47 +1,86 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from controladorDB import * #1 presentamos los  archivos para que se conozcan 
+from controladorDB import *   #1. Presentamos los archivos Controlador Vista
+from tkinter import messagebox
 
-#2 crear un objeto de la clase controlador el nombre de la clase y el nombre que importamos
-controlador = controladorDB()
+#2. Creamos 1 objeto de la Clase ControladorBD
+controlador= controladorBD()
 
-#3 Una funcion para el boton 
+#3. Función para disparar el botón
 def ejecutaInsert():
-    controlador.guardarUsuario(varnom.get(), varcon.get(), varcor.get()):
+    controlador.guardarUsuario(varNom.get(),varCor.get(),varCon.get())
 
-ventana = Tk
-ventana.title('Crude de usuarios')
-ventana.geometry("500x300")
+#4. FUNCION PARA DISPARAR EL BOTON BUSQUEDA
+def ejecutaSelectU():
+    Usuario= controlador.consultarUsuario(varBus.get())
+    for usu in Usuario:
+      cadena= str(usu[0]) + " " + usu[1] + " " + usu[2] + " " + str(usu[3])
 
-panel = ttk.Notebook(ventana)
-panel.pack(fill= 'both', expand='yes')
+    if(Usuario):
+      print(cadena)
+    else:
+        messagebox.showinfo("No encontrado","Ese usuario no existe en la base de datos")
+        
+def ejecutaSelectU():
+    Usuario = controlador.consultarUsuario(varBus.get())
+    if Usuario:
+        cadena = "ID\tNombre\tCorreo\tContraseña\n"
+        for usu in Usuario:
+            cadena += f"{usu[0]}\t{usu[1]}\t{usu[2]}\t{usu[3]}\n"
+        textEnc.delete('1.0', END)
+        textEnc.insert('1.0', cadena)
+    else:
+        messagebox.showinfo("No encontrado","Ese usuario no existe en la base de datos")
+   
+      
+        
+Ventana= Tk()
+Ventana.title("CRUD de Usuarios")
+Ventana.geometry("500x300")
 
-pestaña1 = ttk.Frame(panel)
-pestaña2 = ttk.Frame(panel)
-pestaña3 = ttk.Frame(panel)
-pestaña4 = ttk.Frame(panel)
+panel= ttk.Notebook(Ventana)
+panel.pack(fill="both",expand="yes")
 
-#pestaña 1
+Pestaña1= ttk.Frame(panel)
+Pestaña2= ttk.Frame(panel)
+Pestaña3= ttk.Frame(panel)
+Pestaña4= ttk.Frame(panel)
 
-titulo = Label(pestaña1, text="Registro de usuario", fg="purple", bg="white", font=("Modern",18)).pack()
-varnom= tk.StringVar()
-lblnom = Label(pestaña1, text= 'Nombre').pack()
-txtnom = Entry(pestaña1, textvariable= varnom).pack()
+# PESTAÑA1: FORMUALRIO DE USUARIOS
 
-varcor= tk.StringVar()
-lblcor = Label(pestaña1, text= 'Nombre').pack()
-txtcor = Entry(pestaña1, textvariable= varcor).pack()
+titulo= Label(Pestaña1,text="Registro de Usuarios", fg="purple", font=("Modern",18)).pack()
 
-varcon= tk.StringVar()
-lblcon = Label(pestaña1, text= 'Nombre').pack()
-txtcon = Entry(pestaña1, textvariable= varcon).pack()
+varNom= tk.StringVar()
+lblNom= Label(Pestaña1, text="Nombre: ").pack()
+txtNom= Entry(Pestaña1, textvariable=varNom).pack()
 
-btnGuardar = Button(pestaña1, text= "Guardar usuario", command=ejecutaInsert).pack()
+varCor= tk.StringVar()
+lblCor= Label(Pestaña1, text="Correo: ").pack()
+txtCor= Entry(Pestaña1, textvariable=varCor).pack()
 
-panel.add(pestaña1, text='Formulario de usuarios:')
-panel.add(pestaña2, text='Buscar usuario:')
-panel.add(pestaña3, text='Consultar usuario:')
-panel.add(pestaña4, text='Actualizar usuario:')
+varCon= tk.StringVar()
+lblCon= Label(Pestaña1, text="Contraseña: ").pack()
+txtCon= Entry(Pestaña1, textvariable=varCon).pack()
 
-ventana.mainloop()
+btnGuardar= Button(Pestaña1, text="Guardar Usuario",command=ejecutaInsert).pack()
+
+# PESTAÑA2: BUSCAR USUARIO
+
+titulo2= Label(Pestaña2,text="Buscar Usuario", fg="Purple", font=("Modern",18)).pack()
+
+varBus= tk.StringVar()
+lblid= Label(Pestaña2, text="Identificador de Usuario: ").pack()
+txtid= Entry(Pestaña2, textvariable=varBus).pack()
+btnBus= Button(Pestaña2, text="Buscar",command=ejecutaSelectU).pack()
+
+subBus=Label(Pestaña2,text="Encontrado", fg="green", font=("Modern",15))
+textEnc= tk.Text(Pestaña2,height=5,width=52)
+textEnc.pack()
+
+panel.add(Pestaña1, text="Formulario Usuarios")
+panel.add(Pestaña2, text="Buscar Usuarios")
+panel.add(Pestaña3, text="Consultar Usuarios")
+panel.add(Pestaña4, text="Actualizar Usuarios")
+
+Ventana.mainloop()
