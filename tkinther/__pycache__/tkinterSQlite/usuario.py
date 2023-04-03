@@ -33,8 +33,18 @@ def ejecutaSelectU():
     else:
         messagebox.showinfo("No encontrado","Ese usuario no existe en la base de datos")
    
-      
+def limpiarTreeview(tree):
+    for i in range(tree.get_children()):
+        tree.delete(tree.index(i)) 
         
+def mostUsuario():
+    limpiarTreeview(textEn)
+    usuarios = controlador.exporUsuario()
+    for usu in usuarios:
+        cadena = str(usu[0]) + " " + usu[1] + " " + usu[2] + " " + str(usu[3])
+        textEn.insert("", "end", values=(usu[0], usu[1], usu[2], usu[3]))
+        print(cadena)
+             
 Ventana= Tk()
 Ventana.title("CRUD de Usuarios")
 Ventana.geometry("500x300")
@@ -77,6 +87,20 @@ btnBus= Button(Pestaña2, text="Buscar",command=ejecutaSelectU).pack()
 subBus=Label(Pestaña2,text="Encontrado", fg="green", font=("Modern",15))
 textEnc= tk.Text(Pestaña2,height=5,width=52)
 textEnc.pack()
+
+#pestaña3: Consultar usuario
+
+titulo3 = Label(Pestaña3, text="TODOS LOS USUARIOS", fg="Purple", font=("Modern", 18)).pack
+
+vartod= tk.StringVar()
+lblou= Label(Pestaña3, text="Todos los usuarios ").pack()
+btntod= Button(Pestaña3, text="Buscar", command= mostUsuario ).pack()
+
+subtod=Label(Pestaña3, fg="red", font=("Modern",15))
+textEn= tk.Text(Pestaña3,height=5,width=60)
+textEn.pack()
+
+
 
 panel.add(Pestaña1, text="Formulario Usuarios")
 panel.add(Pestaña2, text="Buscar Usuarios")

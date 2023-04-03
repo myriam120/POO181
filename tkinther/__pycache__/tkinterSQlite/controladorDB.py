@@ -76,3 +76,12 @@ class controladorBD:
              
             except sqlite3.OperationalError:
                 print("Error consulta")        
+                
+    #Exportar usuario 
+    def exporUsuario (self):
+        conx=self.conexionBD()
+        cursor = conx.cursor()
+        selectQry = "select * from TBRegistrados"
+        cursor.execute(selectQry)
+        rsUsuario = cursor.fetchall()
+        return rsUsuario
