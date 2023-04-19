@@ -77,11 +77,26 @@ class controladorBD:
             except sqlite3.OperationalError:
                 print("Error consulta")        
                 
-    #Exportar usuario 
-    def exporUsuario (self):
-        conx=self.conexionBD()
-        cursor = conx.cursor()
-        selectQry = "select * from TBRegistrados"
-        cursor.execute(selectQry)
-        rsUsuario = cursor.fetchall()
-        return rsUsuario
+    def consultarUsuario(self,id):
+        #1. Preparar una conexion
+        cons = self.conexionBD()
+
+        #2. Verifiacar si ID contiene algo
+        if(id == ""):
+            messagebox.showwarning("Cuidado","ID vacío")
+            cons.close()
+        else:
+            try:
+                #3. Preparar cursor y querry
+                cursor = cons.cursor()
+                selecQuery = "select * from TBRegistrados where id="+id
+
+                #4. Ejecutar y guardar la consulta
+                cursor.execute(selecQuery)
+                rsUsuario = cursor.fetchall()
+                cons.close()
+
+                return rsUsuario
+
+            except sqlite3.OperationalError:
+                print("Error consulta")

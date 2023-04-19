@@ -1,3 +1,4 @@
+import threading
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -32,19 +33,55 @@ def ejecutaSelectU():
         textEnc.insert('1.0', cadena)
     else:
         messagebox.showinfo("No encontrado","Ese usuario no existe en la base de datos")
-   
-def limpiarTreeview(tree):
-    for i in range(tree.get_children()):
-        tree.delete(tree.index(i)) 
+
+def limpiarTreeview():
+    for item in tree.get_children():
+        tree.delete(item)
         
-def mostUsuario():
-    limpiarTreeview(textEn)
+def mostrarUsuarios():
+    limpiarTreeview()
     usuarios = controlador.exporUsuario()
+    conx = controlador.exporUsuario
     for usu in usuarios:
-        cadena = str(usu[0]) + " " + usu[1] + " " + usu[2] + " " + str(usu[3])
-        textEn.insert("", "end", values=(usu[0], usu[1], usu[2], usu[3]))
-        print(cadena)
-             
+        tree.insert("", "end", values=(usu[0], usu[1], usu[2], usu[3]))
+        for record in tree.get_children():
+            tree.delete(record)
+        datos = conx()
+        for i , row in enumerate(datos):
+            tree.insert("", "end", text=str(i+1), values=row)
+            
+def actualizar ():
+    t= threading.Thread(target= actualizar)
+    t.start()
+
+def eliminar(self, conexionBD, TBRegistrados):
+    try:
+            self.cursor.execute(f"USE {conexionBD}")
+            # Se borran todos los registros de una tabla
+            sql = f"DELETE FROM {TBRegistrados}"
+            self.cursor.execute(sql)
+            self.conector.commit()
+            print("Se han borrado todos los registros ")
+    except:
+            print("Error al intentar borrar los registros")  
+            TBRegistrados.eliminar ("id", "nombre", "correo", "contra")
+  
+def actualizaUsu (self, conexionBD, TBRegistrados):
+        try:
+          	# Se selecciona la base de datos
+            self.cursor.execute(f"USE {conexionBD}")
+
+            # Crear la instrucción de actualización
+            sql = f"UPDATE {TBRegistrados} "
+            # Se ejecuta la instrucción de actualización y se hace efectiva
+            self.cursor.execute(sql)
+            self.conector.commit()
+            messagebox.askquestion("Se actualizó el registro correctamente.")
+        except:
+            messagebox.askyesnocancel("Ocurrió un error al intentar actualizar el registro.")
+            TBRegistrados.actualizaUsu("id= '' ", "contraseña = '', correo= ''", "nombre = '';")
+            
+
 Ventana= Tk()
 Ventana.title("CRUD de Usuarios")
 Ventana.geometry("500x300")
@@ -93,13 +130,40 @@ textEnc.pack()
 titulo3 = Label(Pestaña3, text="TODOS LOS USUARIOS", fg="Purple", font=("Modern", 18)).pack
 
 vartod= tk.StringVar()
-lblou= Label(Pestaña3, text="Todos los usuarios ").pack()
-btntod= Button(Pestaña3, text="Buscar", command= mostUsuario ).pack()
+lblou= Label(Pestaña3, text="Mostrar todo los usuarios ", fg="Purple", font=("Modern", 18)).pack()
+btntod= Button(Pestaña3, text="Buscar", command= mostrarUsuarios ).pack()
 
-subtod=Label(Pestaña3, fg="red", font=("Modern",15))
-textEn= tk.Text(Pestaña3,height=5,width=60)
-textEn.pack()
 
+tree = ttk.Treeview(Pestaña3,columns=("ID", "Nombre", "Correo", "Contraseña"))
+tree.pack(side=tk.TOP, fill=tk.BOTH, padx=5, pady=5)
+tree.heading("#1", text="ID")
+tree.heading("#2", text="Nombre")
+tree.heading("#3", text="Correo")
+tree.heading("#4", text="Contraseña")
+
+#Pestaña 4 actualizar y eliminar 
+titulo= Label(Pestaña4,text="Actualizar ", fg="purple", font=("Modern",18)).pack()
+
+varNom= tk.StringVar()
+lblNom= Label(Pestaña4, text="Nombre: ").pack()
+txtNom= Entry(Pestaña4, textvariable=varNom).pack()
+
+varCor= tk.StringVar()
+lblCor= Label(Pestaña4, text="Correo: ").pack()
+txtCor= Entry(Pestaña4, textvariable=varCor).pack()
+
+varCon= tk.StringVar()
+lblCon= Label(Pestaña4, text="Contraseña: ").pack()
+txtCon= Entry(Pestaña4, textvariable=varCon).pack()
+
+btntod= Button(Pestaña4, text="Actualizar usuario", command= actualizaUsu).pack()
+
+titulo= Label(Pestaña4,text="Eliminar ", fg="purple", font=("Modern",18)).pack()
+
+varNom= tk.StringVar()
+lblNom= Label(Pestaña4, text="ID: ").pack()
+txtNom= Entry(Pestaña4, textvariable=varNom).pack()
+btntod= Button(Pestaña4, text="Eliminar usuario", command= eliminar).pack()
 
 
 panel.add(Pestaña1, text="Formulario Usuarios")

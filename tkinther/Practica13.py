@@ -40,10 +40,10 @@ class Ventana(tk.Tk):
     #Función para el botón
     def on_button(self):
         #se crea el objeto con los gets de los entry's
-        seg=logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
+        seg=Logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
         #se mandan los parametros de los gets para la funcion loginveriicacion de la clase login.py
         seg.Seguridad(int(self.entryLen.get()))
-        gen=logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
+        gen=ogic(self.entryLen.get(),self.estado.get(),self.estado1.get())
         gen.Contraseña(int(self.entryLen.get()),self.estado.get(),self.estado1.get())
         print(self.entryLen.get())
         print(self.estado.get())
