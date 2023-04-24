@@ -1,54 +1,64 @@
 import tkinter as tk
-from Logic import *
+import random
+import string
 
-class Ventana(tk.Tk):
-    def _init_(self):
-        tk.Tk._init_(self)
-        self.title("Practica 13")
-        self.geometry("300x150")
-        
-        #Etiqueta de longitud
-        self.lenlabel = tk.Label(text="longitud de tu contraseña ")
-        self.lenlabel.pack()
-        
-        #Entry de Longitud
-        self.entryLen = tk.Entry(self)
-        self.entryLen.pack()
-        
-        #Checkbox de Mayusculas
+class PasswordGenerator:
+    def __init__(self, length=8, uppercase=False, special=False):
+        self.length = length
+        self.uppercase = uppercase
+        self.special = special
 
+    def generate_password(self):
+        chars = string.ascii_lowercase
+        if self.uppercase:
+            chars += string.ascii_uppercase
+        if self.special:
+            chars += string.punctuation
+        return ''.join(random.choice(chars) for _ in range(self.length))
 
-        # Crea la casilla de verificación y asocia su estado con la variable "estado"
-        self.estado = tk.BooleanVar()
-        
-        self.estado1 = tk.BooleanVar()
-        self.checkboxm = tk.Checkbutton(self, text="Incluir mayuscula",variable=self.estado,onvalue=True, offvalue=False)
-        self.checkboxm.pack()
-        self.checkboxes = tk.Checkbutton(self, text="Incluir caracteres especiales",variable=self.estado1,onvalue=True, offvalue=False)
-        self.checkboxes.pack()
-        
+class PasswordGUI:
+    def __init__(self):
+        self.window = tk.Tk()
+        self.window.title("Exportaciones")
+        self.window.geometry("300x300")
+        self.password_generator = PasswordGenerator()
 
-        
-        #Checkbox de caracteres especiales
-        
-        
-    
-        #Boton de ingresar con la funcion de obtener los datos de los entry's, y mandarlos a la clase login
-        self.button = tk.Button(self, text="Generar Contraseña", command=self.on_button)
-        self.button.pack()
-        
-    #Función para el botón
-    def on_button(self):
-        #se crea el objeto con los gets de los entry's
-        seg=Logic(self.entryLen.get(),self.estado.get(),self.estado1.get())
-        #se mandan los parametros de los gets para la funcion loginveriicacion de la clase login.py
-        seg.Seguridad(int(self.entryLen.get()))
-        gen=ogic(self.entryLen.get(),self.estado.get(),self.estado1.get())
-        gen.Contraseña(int(self.entryLen.get()),self.estado.get(),self.estado1.get())
-        print(self.entryLen.get())
-        print(self.estado.get())
-        print(self.estado1.get())
+        self.length_label = tk.Label(self.window, text="Longitud:")
+        self.length_entry = tk.Entry(self.window)
+        self.length_entry.insert(0, "8")
 
-ventana = Ventana()
-ventana.mainloop()
-    
+        self.uppercase_var = tk.IntVar()
+        self.uppercase_checkbutton = tk.Checkbutton(self.window, text="Incluye mayusculas", variable=self.uppercase_var, fg="purple")
+
+        self.special_var = tk.IntVar()
+        self.special_checkbutton = tk.Checkbutton(self.window, text="Incluye caracteres especiales", variable=self.special_var, fg="purple")
+
+        self.generate_button = tk.Button(self.window, text="Generar Contraseña", command=self.generate_password, fg="white", bg="black")
+
+        self.password_label = tk.Label(self.window, text="Tu contraseña es:", fg="purple")
+        self.password_entry = tk.Entry(self.window)
+
+        self.length_label.pack()
+        self.length_entry.pack()
+        self.uppercase_checkbutton.pack()
+        self.special_checkbutton.pack()
+        self.generate_button.pack()
+        self.password_label.pack()
+        self.password_entry.pack()
+
+    def generate_password(self):
+        length = int(self.length_entry.get())
+        uppercase = bool(self.uppercase_var.get())
+        special = bool(self.special_var.get())
+        self.password_generator = PasswordGenerator(length, uppercase, special)
+        password = self.password_generator.generate_password()
+        self.password_entry.delete(0, tk.END)
+        self.password_entry.insert(0, password)
+        tk.messagebox.showinfo("Password Generated", f"Your password is: {password}")
+
+    def run(self):
+        self.window.mainloop()
+
+if __name__ == "__main__":
+    gui = PasswordGUI()
+    gui.run()

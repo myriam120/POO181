@@ -25,7 +25,7 @@ class Controlador:
             messagebox.showwarning('Aguas', 'Formulario Incompleto')
         else:
             Cursor = Conx.cursor()  
-            ConH = self.encriptarCon(ma)
+            ma= self.encriptarCon(ma)
             Datos = (idm, ca, ma)
             qrInsert = 'INSERT INTO MatConstuccion (id, material, cantidad) VALUES (?, ?, ?)' 
             
@@ -59,14 +59,12 @@ class Controlador:
     def ActualizarMaterial(self, id,ma,ca):
         #1. usamos una conexion 
         conx=self.conexionBD()
-        
         #2. validar parámetros vacíos
-        
         if(id=="" or ma=="" or ca==""):
             messagebox.showwarning("Campos incompletos")
             return False
         if ma not in ["Sí", "No"]:
-            messagebox.showwarning("Error","El campo de disponibilidad solo admite sí o No, favor de seleccionar una opción válida")
+            messagebox.showwarning("Error","El campo de disponibilidad solo admite sí o No")
             return False
         try:
             float(ca)
@@ -80,3 +78,29 @@ class Controlador:
         except ValueError:
             messagebox.showwarning("Error")
             return False
+        
+    def consultarMA(self,id):
+        #1. Preparar una conexion
+        cons = self.conexionBD()
+
+        #2. Verifiacar si ID contiene algo
+        if(id == ""):
+            messagebox.showwarning("Cuidado","ID vacío")
+            cons.close()
+        else:
+            try:
+                #3. Preparar cursor y querry
+                cursor = cons.cursor()
+                selecQuery = "select * from MatConstuccion where id="+id
+
+                #4. Ejecutar y guardar la consulta
+                cursor.execute(selecQuery)
+                rsUsuario = cursor.fetchall()
+                cons.close()
+
+                return rsUsuario
+
+            except sqlite3.OperationalError:
+                print("Error consulta")
+                
+    

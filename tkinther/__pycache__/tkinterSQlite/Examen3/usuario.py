@@ -2,12 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 from Constructor  import *
+import threading
 
 constrolador = Controlador()
 
 def ejecutaIn():
     constrolador.usuario(varID.get(),varMA.get(),varCA.get())
-      
+    
+   
 Ventana= Tk()
 Ventana.title("FERRETERIA")
 Ventana.geometry("300x300")
@@ -33,20 +35,23 @@ varCA= tk.StringVar()
 lblCA= Label(Pestaña1, text="Cantidad: ").pack()
 txtCA= Entry(Pestaña1, textvariable=varCA).pack()
 
-btnGuardar= Button(Pestaña1, text="Guardar", command=ejecutaIn)
+btnGuardar= Button(Pestaña1, text="Guardar", command=ejecutaIn).pack()
 
 #2. pestaña dos 
 
-titulo2= Label(Pestaña2,text="Actualizar Material", fg="Purple", font=("Modern",18)).pack()
+titulo3 = Label(Pestaña2, text="TODOS LOS USUARIOS", fg="Purple", font=("Modern", 18)).pack
 
-varBus= tk.StringVar()
-lblid= Label(Pestaña2, text="Identificador de Material").pack()
-txtid= Entry(Pestaña2, textvariable=varBus).pack()
-btnBus= Button(Pestaña2, text="Buscar").pack()
+vartod= tk.StringVar()
+lblou= Label(Pestaña2, text="Mostrar todo los usuarios ", fg="Purple", font=("Modern", 18)).pack()
+btntod= Button(Pestaña2, text="Buscar", command=actualizaMa).pack()
 
-subBus=Label(Pestaña2,text="Encontrado", fg="green", font=("Modern",15))
-textEnc= tk.Text(Pestaña2,height=5,width=52)
-textEnc.pack()
+
+tree = ttk.Treeview(Pestaña2,columns=("ID", "Material", "Cantidad"))
+tree.pack(side=tk.TOP, fill=tk.BOTH, padx=5, pady=5)
+tree.heading("#1", text="ID")
+tree.heading("#2", text="Material")
+tree.heading("#3", text="Cantidad")
+
 
 panel.add(Pestaña1, text="Formulario de Materiales")
 panel.add(Pestaña2, text="Buscar Materiales")
