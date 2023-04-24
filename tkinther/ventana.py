@@ -26,7 +26,6 @@ class Ventana(tk.Tk):
     def on_button(self):
         #se crea el objeto con los gets de los entry's
         verif=logica(self.entryem.get(),self.password_entry.get())
-        #se mandan los parametros de los gets para la funcion loginveriicacion de la clase login.py
         verif.loginVerificacion()
 ventana = Ventana()
 ventana.mainloop()

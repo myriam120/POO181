@@ -27,7 +27,6 @@ class Cuenta:
     def _ne_(self, other):
         return not self._eq_(other)
 
-
 class Caja:
     def __init__(self):
         self.cuentas = []
@@ -108,7 +107,7 @@ class Formulario(Tk):
     def __init__(self):
         Tk.__init__(self)
         self.title("Caja Popular")
-        self.geometry("400x400")
+        self.geometry("400x300")
         self.caja = Caja()
         
         
@@ -116,21 +115,21 @@ class Formulario(Tk):
         self.monto = StringVar()
         self.numero2 = StringVar()
         
-        Label(self, text="No. Cuenta: ").grid(row=0, column=0, sticky="w", padx=5, pady=5)
+        Label(self, text="No. Cuenta: ",fg="purple").grid(row=0, column=0, sticky="w", padx=5, pady=5)
         Entry(self, textvariable=self.numero).grid(row=0, column=1, padx=5, pady=5)
         
-        Label(self, text="Monto: ").grid(row=1, column=0, sticky="w", padx=5, pady=5)
+        Label(self, text="Monto: ",fg="purple").grid(row=1, column=0, sticky="w", padx=5, pady=5)
         Entry(self, textvariable=self.monto).grid(row=1, column=1, padx=5, pady=5)
         
-        Label(self, text="No. Cuenta 2: ").grid(row=2, column=0, sticky="w", padx=5, pady=5)
+        Label(self, text="No. Cuenta 2: ",fg="purple").grid(row=2, column=0, sticky="w", padx=5, pady=5)
         Entry(self, textvariable=self.numero2).grid(row=2, column=1, padx=5, pady=5)
         
-        Button(self, text="Consultar Saldo", command=self.consultar_saldo).grid(row=3, column=0, columnspan=2, padx=5, pady=5)
-        Button(self, text="Ingresar Efectivo", command=self.ingresar_efectivo).grid(row=4, column=0, columnspan=2, padx=5, pady=5)
-        Button(self, text="Retirar Efectivo", command=self.retirar_efectivo).grid(row=5, column=0, columnspan=2, padx=5, pady=5)
-        Button(self, text="Depositar a otra cuenta", command=self.depositar_a_otra_cuenta).grid(row=6, column=0, columnspan=2, padx=5, pady=5)
-        Button(self, text="Nueva Cuenta", command=self.nueva_cuenta).grid(row=7, column=0, columnspan=2, padx=5, pady=5)
-        Button(self, text="Ver Todas las Cuentas", command=self.ver_todas).grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Consultar Saldo", command=self.consultar_saldo,fg="white", bg="black").grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Ingresar Efectivo", command=self.ingresar_efectivo,fg="white", bg="black").grid(row=4, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Retirar Efectivo", command=self.retirar_efectivo,fg="white", bg="black").grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Depositar a otra cuenta", command=self.depositar_a_otra_cuenta,fg="white", bg="black").grid(row=6, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Nueva Cuenta", command=self.nueva_cuenta,fg="white", bg="black").grid(row=7, column=0, columnspan=2, padx=5, pady=5)
+        Button(self, text="Ver Todas las Cuentas", command=self.ver_todas,fg="white", bg="black").grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
         
         
