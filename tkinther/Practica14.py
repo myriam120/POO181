@@ -97,11 +97,9 @@ class NuevaCuenta(Toplevel):
             messagebox.showerror("Error", "Debe llenar todos los campos")
         else:
             self.parent.caja.agregar_cuenta(Cuenta(self.numero, self.titular.get(), int(self.edad.get()), 0))
-            messagebox.showinfo("Información", "Cuenta creada con éxito")
+            messagebox.showinfo("Cuenta", "Cuenta creada con éxito")
             self.destroy()
     
-    
-            
 class Formulario(Tk):
 
     def __init__(self):
@@ -131,8 +129,6 @@ class Formulario(Tk):
         Button(self, text="Nueva Cuenta", command=self.nueva_cuenta,fg="white", bg="black").grid(row=7, column=0, columnspan=2, padx=5, pady=5)
         Button(self, text="Ver Todas las Cuentas", command=self.ver_todas,fg="white", bg="black").grid(row=6, column=0, columnspan=2, padx=5, pady=5)
 
-        
-        
     def consultar_saldo(self):
         if self.numero.get() == "":
             messagebox.showerror("Error", "Debe llenar el campo No. Cuenta")
