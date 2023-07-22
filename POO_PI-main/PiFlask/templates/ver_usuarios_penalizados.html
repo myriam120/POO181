@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ver Usuarios Penalizados</title>
+</head>
+<body>
+    <h1>Usuarios Penalizados</h1>
+    <ul>
+        {% for usuario in usuarios_penalizados %}
+            <li>{{ usuario.nombre }} - {{ usuario.fecha_penalizacion }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
